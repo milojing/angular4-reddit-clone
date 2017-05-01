@@ -12,14 +12,20 @@ import { Component } from '@angular/core';
 export class SidebarComponent{}
 
 @Component({
+  selector: "app-article",
+  template: `
+    <div>Article goes here</div>
+  `
+})
+export class ArticleComponent {}
+
+@Component({
   selector: 'app-root',
   template: `
      <div id="container">
      <app-sidebar></app-sidebar>
         <div id="content">
-        <div>
-          Article list will go here
-          </div>
+        <app-article></app-article>
           </div>
      </div>
   `

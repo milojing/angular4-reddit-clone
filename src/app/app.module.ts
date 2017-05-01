@@ -3,11 +3,16 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AppComponent, SidebarComponent } from './app.component';
+import {
+  AppComponent,
+  SidebarComponent,
+  ArticleComponent} from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent, SidebarComponent
+    AppComponent,
+    SidebarComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,
