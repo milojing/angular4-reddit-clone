@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ArticleService} from '../article.service';
+declare var jQuery:any;
 
 @Component({
   selector: 'app-article-list-header',
@@ -8,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleListHeaderComponent implements OnInit {
 
-  constructor() { }
+  private currentFilter: string = 'Time';
+  private sortDirection: number = 1;
+  constructor(
+    private articleService: ArticleService
+  ) { }
 
+  changeDirection() {
+    this.sortDirection = this.sortDirection * -1;
+    this._updateSort();
+  }
+
+  changeSort(filter: string) {
+    if (filter === this.currentFilter) {
+      this.changeDirection();
+    } else {
+      this.currentFilter = filter;
+      this._updateSort();
+    }
+  }
+
+  _updateSort() {
+    this.articleService.sortBy(this.currentFilter, this.sortDirection);
+  }
   ngOnInit() {
+    jQuery('.ui.dropdown').dropdown();
   }
 
 }
