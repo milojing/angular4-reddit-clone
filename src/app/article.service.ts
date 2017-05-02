@@ -7,7 +7,9 @@ export class ArticleService {
   constructor() { }
 
   public getArticles(): Promise<Article[]> {
-    return Promise.resolve([
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve([
       new Article(
       'The Angular 2 screencast',
        '1',
@@ -25,6 +27,8 @@ export class ArticleService {
     'The Angular 2 screencast',
      '4'
    ),])
-  }
+ }, 2000);
+ });
+ }
 
 }
