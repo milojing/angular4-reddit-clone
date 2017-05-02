@@ -12,6 +12,6 @@ export class AppComponent {
   constructor(
     private articleService:ArticleService
   ) {
-    this.articles = articleService.getArticles();
+    articleService.getArticles().then(articles => this.articles=articles);
   }
 }
