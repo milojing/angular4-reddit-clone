@@ -1,34 +1,36 @@
 import { Injectable } from '@angular/core';
 import {Article} from './article';
+import {Http, URLSearchParams} from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
+const baseUrl = 'https://newsapi.org';
+const newsApiKey = 'f1518c9001e04e1b909093de30600345';
 
 @Injectable()
 export class ArticleService {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   public getArticles(): Promise<Article[]> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve([
-      new Article(
-      'The Angular 2 screencast',
-       '1',
-       10
-    ),
-    new Article(
-    'The Angular 2 screencast',
-     '2'
-   ),
-    new Article(
-    'The Angular 2 screencast',
-     '3'
-  ),
-    new Article(
-    'The Angular 2 screencast',
-     '4'
-   ),])
- }, 2000);
- });
+    let params = new URLSearchParams();
+    params.set('apiKey', newsApiKey);
+    params.set('source', 'reddit-r-all');
+    return this.http.get(`${baseUrl}/v1/articles`, {
+      search: params
+    })
+    .toPromise()
+    .then(resp=> {
+      return resp.json();
+    })
+    .then(json => json.articles)
+    .then(articles => {
+      const list = articles.map(article => new Article(article.title, article.description));
+      console.log('json ->', list);
+      return list;
+    })
+    .catch(err => {
+      console.log('we got an error', err);
+    });
  }
 
 }
