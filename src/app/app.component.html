@@ -1,9 +1,5 @@
 <div class="ui container">
 <app-sidebar></app-sidebar>
-   <div class="ui divided items">
-   <app-article
-   *ngFor="let article of articles"
-   [article]="article"
-   class="item"></app-article>
-     </div>
+ <app-article-list
+ [articles]="articles"></app-article-list>
 </div>
