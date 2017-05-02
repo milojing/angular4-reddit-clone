@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,10 +14,15 @@ export class SidebarComponent{}
 @Component({
   selector: "app-article",
   template: `
-    <div>Article goes here</div>
+    <div>
+    <h2>{{article.title}}</h2>
+    <p> {{article.description}}</p>
+    </div>
   `
 })
-export class ArticleComponent {}
+export class ArticleComponent {
+  @Input() article: Object;
+}
 
 @Component({
   selector: 'app-root',
@@ -25,11 +30,31 @@ export class ArticleComponent {}
      <div id="container">
      <app-sidebar></app-sidebar>
         <div id="content">
-        <app-article></app-article>
+        <app-article
+        *ngFor="let article of articles"
+        [article]="article"></app-article>
           </div>
      </div>
   `
 })
 export class AppComponent {
-  title = 'Ari';
+  articles: Object[];
+
+  constructor() {
+    this.articles = [{
+      title: 'The Angular 2 screencast',
+      description: '1'
+    },
+    {
+      title: 'The Angular 2 screencast',
+      description: '2'
+    },
+    {
+      title: 'The Angular 2 screencast',
+      description: '3'
+    },{
+      title: 'The Angular 2 screencast',
+      description: '4'
+    }]
+  }
 }
