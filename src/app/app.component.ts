@@ -43,11 +43,12 @@ export class SidebarComponent{}
     </div>
     </span>
     <span class="ui right floated">
-    <a class="ui small label">
+    <a (click)="upvote()" class="ui small label">
     <i class="arrow up icon"></i>
     Upvote
     </a>
-    <a class="ui small label">
+    <a (click)="downvote()"
+    class="ui small label">
     <i class="arrow down icon"></i>
     Downvote
     </a>
@@ -72,6 +73,14 @@ export class SidebarComponent{}
 })
 export class ArticleComponent {
   @Input() article: Article;
+
+  upvote() {
+    console.log("called in component upvote!");
+  }
+
+  downvote() {
+    console.log("called in compnent downvote")
+  }
 }
 
 @Component({
