@@ -1,5 +1,11 @@
 import { Component, Input } from '@angular/core';
 
+class Article {
+  constructor(
+    public title: string,
+    public description: string
+  ) {}
+}
 @Component({
   selector: 'app-sidebar',
   template: `
@@ -21,7 +27,7 @@ export class SidebarComponent{}
   `
 })
 export class ArticleComponent {
-  @Input() article: Object;
+  @Input() article: Article;
 }
 
 @Component({
@@ -38,23 +44,25 @@ export class ArticleComponent {
   `
 })
 export class AppComponent {
-  articles: Object[];
+  articles: Article[];
 
   constructor() {
-    this.articles = [{
-      title: 'The Angular 2 screencast',
-      description: '1'
-    },
-    {
-      title: 'The Angular 2 screencast',
-      description: '2'
-    },
-    {
-      title: 'The Angular 2 screencast',
-      description: '3'
-    },{
-      title: 'The Angular 2 screencast',
-      description: '4'
-    }]
+    this.articles = [
+      new Article(
+      'The Angular 2 screencast',
+       '1'
+    ),
+    new Article(
+    'The Angular 2 screencast',
+     '2'
+   ),
+    new Article(
+    'The Angular 2 screencast',
+     '3'
+  ),
+    new Article(
+    'The Angular 2 screencast',
+     '4'
+    ),]
   }
 }
