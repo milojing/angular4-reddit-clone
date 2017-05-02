@@ -13,6 +13,9 @@ export class ArticleService {
   new BehaviorSubject<Article[]>([]);
 
   public articles: Observable<Article[]> = this._articles.asObservable();
+  // why here use asObservable _articles self is also Observable
+  // reason is to hide the sequence, since subject is powerful als normal
+  //Observable, it can call next function to broadcast next event
   constructor(private http: Http) { }
 
   public getArticles(): void {
