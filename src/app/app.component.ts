@@ -12,6 +12,15 @@ class Article {
   public date(): Date {
     return new Date();
   }
+
+  public voteDown(): void {
+    this.votes = this.votes - 1;
+  }
+
+  public voteUp(): void {
+    this.votes = this.votes + 1;
+  }
+
 }
 @Component({
   selector: 'app-sidebar',
@@ -75,11 +84,11 @@ export class ArticleComponent {
   @Input() article: Article;
 
   upvote() {
-    console.log("called in component upvote!");
+    this.article.voteUp();
   }
 
   downvote() {
-    console.log("called in compnent downvote")
+    this.article.voteDown();
   }
 }
 
