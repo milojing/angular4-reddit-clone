@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable} from 'rxjs';
 import {Article} from '../article';
 import {ArticleService} from '../article.service';
 
@@ -8,14 +9,15 @@ import {ArticleService} from '../article.service';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
- articles: Article[];
+ private articles: Observable<Article[]>;
   constructor(
     private articleService:ArticleService
   ) {
+    this.articles = articleService.articles;
   }
 
   ngOnInit() {
-    this.articleService.getArticles().then(articles => this.articles=articles);
+    this.articleService.getArticles();
   }
 
 }
