@@ -42,6 +42,16 @@ export class SidebarComponent{}
     {{article.votes}}
     </div>
     </span>
+    <span class="ui right floated">
+    <a class="ui small label">
+    <i class="arrow up icon"></i>
+    Upvote
+    </a>
+    <a class="ui small label">
+    <i class="arrow down icon"></i>
+    Downvote
+    </a>
+    </span>
     </div>
     <div class="meta date">
     {{article.date() | date:'medium'}}
