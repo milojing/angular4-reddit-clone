@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {Article} from './article';
+import {ArticleService} from './article.service';
 
 @Component({
   selector: 'app-root',
@@ -8,24 +9,9 @@ import {Article} from './article';
 export class AppComponent {
   articles: Article[];
 
-  constructor() {
-    this.articles = [
-      new Article(
-      'The Angular 2 screencast',
-       '1',
-       10
-    ),
-    new Article(
-    'The Angular 2 screencast',
-     '2'
-   ),
-    new Article(
-    'The Angular 2 screencast',
-     '3'
-  ),
-    new Article(
-    'The Angular 2 screencast',
-     '4'
-    ),]
+  constructor(
+    private articleService:ArticleService
+  ) {
+    this.articles = articleService.getArticles();
   }
 }

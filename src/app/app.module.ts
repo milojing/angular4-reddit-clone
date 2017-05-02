@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import {ArticleComponent} from './article/article.component';
 import { ArticleListComponent } from './article-list/article-list.component';
-
+import {ArticleService} from './article.service'
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [ArticleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
