@@ -35,6 +35,11 @@ export class ArticleService {
   private _articles: BehaviorSubject<Article[]> =
   new BehaviorSubject<Article[]>([]);
 
+  private _sources: BehaviorSubject<any> =
+    new BehaviorSubject<any>([]);
+
+  private _refreshSubject: BehaviorSubject<string> = new
+    BehaviorSubject<string>('reddit-r-all');
   private _sortByDirectionSubject:
   BehaviorSubject<number> = new BehaviorSubject<number>(1);
   private _sortByFilterSubject:
@@ -42,12 +47,14 @@ export class ArticleService {
   private _filterBySubject:
   BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  public sources: Observable<any> = this._sources.asObservable();
   public articles: Observable<Article[]> = this._articles.asObservable();
   public orderedArticles: Observable<Article[]>;
   // why here use asObservable _articles self is also Observable
   // reason is to hide the sequence, since subject is powerful als normal
   //Observable, it can call next function to broadcast next event
   constructor(private http: Http) {
+    this._refreshSubject.subscribe(this.getArticles.bind(this));
     this.orderedArticles = Observable.combineLatest(
       this._articles,
       this._sortByFilterSubject,
@@ -73,8 +80,12 @@ export class ArticleService {
     this._filterBySubject.next(filter);
   }
 
-  public getArticles(): void {
-    this._makeHttpRequest('/v1/articles', 'reddit-r-all')
+  public updateArticles(sourceKey): void {
+    this._refreshSubject.next(sourceKey);
+  }
+  public getArticles(sourceKey = 'reddit-r-all'
+  ): void {
+    this._makeHttpRequest('/v1/articles', sourceKey)
         .map(json => json.articles)
         .subscribe(articlesJSON => {
           const articles = articlesJSON
@@ -82,13 +93,21 @@ export class ArticleService {
             this._articles.next(articles);
         })
   }
+  public getSources(): void {
+    this._makeHttpRequest('/v1/sources')
+      .map(json => json.sources)
+      .filter(list => list.length > 0)
+      .subscribe(this._sources);
+  }
   private _makeHttpRequest(
     path: string,
-    sourceKey: string
+    sourceKey?: string
   ): Observable<any> {
     let params = new URLSearchParams();
     params.set('apiKey', environment.newsApiKey);
-    params.set('source', sourceKey);
+    if (sourceKey && sourceKey !== '') {
+      params.set('source', sourceKey);
+    }
 
     return this.http.get(`${environment.baseUrl}${path}`, {
       search: params
